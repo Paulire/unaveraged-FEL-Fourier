@@ -73,13 +73,23 @@ def _plot_E_z( self, fname, dpi ):
 def _plot_fourier( self, z, fname, dpi ):
     # Sets z point index (finds the closes z)
     index = np.abs( self.z - z ).argmin()
-    
-    omega = np.fft.fftfreq( self.A_out_ft.shape[0], self.z_1[1] - self.z_1[0] )
 
+    matplotlib.rcParams['font.family'] = 'serif'
+    matplotlib.rcParams['mathtext.fontset'] = 'dejavuserif'
+    matplotlib.rcParams['text.usetex'] = 'True'
+    matplotlib.rcParams['text.latex.preamble'] = '\\usepackage{amsmath} \\usepackage{amssymb}'
+    matplotlib.rcParams['axes.linewidth'] = '1.2'
+    
     fig, axs = plt.subplots(  )
-    axs.plot( omega[ :omega.shape[0]//2 ], np.abs( self.A_out_ft[:omega.shape[0]//2,index] )**2, '-k')
+    axs.plot( self.omega, np.abs( self.A_out_ft[:,index] )**2, '-k')
     axs.set_xlabel('$\\omega$', fontsize=20)
-    axs.set_ylabel('$|\\mathcal{F}(A)|^2$', fontsize=20)
+    #axs.set_ylabel('$|\\mathcal{F}(A)|^2$', fontsize=20)
+    axs.set_ylabel('$|\\hat{A}|^2$', fontsize=20)
+
+    axs.tick_params( direction='in', axis='both', length=6, right=True, top=True, which="both", labelsize=18 )
+    axs.minorticks_on()
+    axs.tick_params( which='minor', length=3, direction='in'  )
+
     plt.tight_layout()
 
     if fname != None:
