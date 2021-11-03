@@ -79,7 +79,7 @@ def run( self ):
         if indexes[-1] != self.z.shape[0] - 1: 
             indexes.append( self.z.shape[0] - 1 )
 
-        indexes = np.array( indexes, dtype=int ).tolist()
+        indexes = np.array( np.unique( indexes ), dtype=int ).tolist()
 
 
         A = False
@@ -93,7 +93,7 @@ def run( self ):
             [ print( self.z[i] ) for i in indexes ]
             exit()
 
-        self.omega = 2*np.pi*np.fft.fftfreq( self.N_z1, (self.z_1[1] - self.z_1[0] )) # Del plzz
+        #self.omega = 2*np.pi*np.fft.fftfreq( self.N_z1, (self.z_1[1] - self.z_1[0] )) # Del plzz
         self.A_hat = self.A_out_ft[:,-1]*(self.z_1[1] - self.z_1[0])
         self.z_1_j = self.z_1_j_out[:,-1]
         self.p_j = self.p_j_out[:,-1]

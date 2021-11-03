@@ -43,11 +43,23 @@ def _plot_z1_A( self, z, fname, dpi ):
     plt.close( fig )
 
 def _plot_E_z( self, fname, dpi ):
+    matplotlib.rcParams['font.family'] = 'serif'
+    matplotlib.rcParams['mathtext.fontset'] = 'dejavuserif'
+    matplotlib.rcParams['text.usetex'] = 'True'
+    matplotlib.rcParams['text.latex.preamble'] = '\\usepackage{amsmath} \\usepackage{amssymb}'
+    matplotlib.rcParams['axes.linewidth'] = '1.2'
+
     fig, axs = plt.subplots(  )
     axs.plot( self.z, self.E_z, '-k')
-    #axs.set_yscale( 'log' )
     axs.set_xlabel('$\\bar{z}$', fontsize=20)
     axs.set_ylabel('$E$', fontsize=20)
+    axs.set_ylim( 0, 1.1*np.max( self.E_z ) )
+    axs.set_xlim( self.z[0], self.z[-1] )
+
+    axs.tick_params( direction='in', axis='both', length=6, right=True, top=True, which="both", labelsize=18 )
+    axs.minorticks_on()
+    axs.tick_params( which='minor', length=3, direction='in'  )
+
     plt.tight_layout()
 
     if fname != None:
