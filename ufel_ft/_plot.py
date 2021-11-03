@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
+import matplotlib
 from matplotlib import pyplot as plt
 
 # Plots |A|^2 as a function of z_1 at the point z
@@ -11,7 +12,13 @@ def _plot_z1_A( self, z, fname, dpi ):
     # Sets z point index (finds the closes z)
     index = np.abs( self.z[:self.current_save_index+1] - z ).argmin()
 
-    plt.style.use( ['science', 'ieee'] )
+    #plt.style.use( ['science', 'ieee'] )
+    matplotlib.rcParams['font.family'] = 'serif'
+    matplotlib.rcParams['mathtext.fontset'] = 'dejavuserif'
+    matplotlib.rcParams['text.usetex'] = 'True'
+    matplotlib.rcParams['text.latex.preamble'] = '\\usepackage{amsmath} \\usepackage{amssymb}'
+    matplotlib.rcParams['axes.linewidth'] = '1.2'
+
     fig, axs = plt.subplots(  )
     axs.plot( self.z_1, np.abs(self.A_out[:,index])**2, '-k')
     #axs.plot( self.z_1_j_out[:,index], np.zeros( len( self.z_1_j_out[:,index] ) ), 'xr' )
@@ -20,7 +27,12 @@ def _plot_z1_A( self, z, fname, dpi ):
     axs.set_title('$\\bar{z}=' + str( round( self.z[index],2 ) ) + str('$'))
     axs.set_ylim( 0,np.max( 1.1*np.abs(self.A_out)**2 ) )
     axs.set_xlim( self.z_1[0], self.z_1[-1] )
+
     plt.tight_layout()
+
+    axs.tick_params( direction='in', axis='both', length=6, right=True, top=True, which="both", labelsize=18 )
+    axs.minorticks_on()
+    axs.tick_params( which='minor', length=3, direction='in'  )
 
     if fname != None:
         plt.savefig(fname, 
