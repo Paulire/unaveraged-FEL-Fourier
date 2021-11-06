@@ -94,7 +94,7 @@ def run( self ):
             exit()
 
         #self.omega = 2*np.pi*np.fft.fftfreq( self.N_z1, (self.z_1[1] - self.z_1[0] )) # Del plzz
-        self.A_hat = self.A_out_ft[:,-1]*(self.z_1[1] - self.z_1[0])
+        self.A_hat = self.A_out_ft[:,-1]
         self.z_1_j = self.z_1_j_out[:,-1]
         self.p_j = self.p_j_out[:,-1]
     
