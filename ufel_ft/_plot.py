@@ -25,7 +25,7 @@ def _plot_z1_A( self, z, fname, dpi ):
     axs.set_xlabel('$\\bar{z}_{1}$', fontsize=20)
     axs.set_ylabel('$|A|^2$', fontsize=20)
     axs.set_title('$\\bar{z}=' + str( round( self.z[index],2 ) ) + str('$'))
-    axs.set_ylim( 0,np.max( 1.1*np.abs(self.A_out)**2 ) )
+    axs.set_ylim( 0,np.max( 1.05*np.abs(self.A_out)**2 ) )
     axs.set_xlim( self.z_1[0], self.z_1[-1] )
 
     plt.tight_layout()
@@ -53,7 +53,7 @@ def _plot_E_z( self, fname, dpi ):
     axs.plot( self.z, self.E_z, '-k')
     axs.set_xlabel('$\\bar{z}$', fontsize=20)
     axs.set_ylabel('$E$', fontsize=20)
-    axs.set_ylim( 0, 1.1*np.max( self.E_z ) )
+    axs.set_ylim( 0, 1.01*np.max( self.E_z ) )
     axs.set_xlim( self.z[0], self.z[-1] )
 
     axs.tick_params( direction='in', axis='both', length=6, right=True, top=True, which="both", labelsize=18 )
