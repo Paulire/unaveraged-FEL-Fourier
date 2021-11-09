@@ -11,45 +11,27 @@ from matplotlib import pyplot as plt
 from sys import exit
 import time
 
-def fel_eq( z, y, N,N_z_1, omega, chi, rho, n_bar, z_1, omega_prime, _1_2_rho, ifft_fact ):
-    #time_val = []
-
-    #start = time.time()
+def fel_eq( z, y, N,N_z_1, omega, chi, rho, n_bar, z_1, omega_prime, _1_2_rho, ifft_fact, l_bar, delta_bar, num_segmets ):
+    # Set the field into a python maths redable
     A_hat = np.array( y[:N_z_1] + 1j*y[N_z_1:2*N_z_1] )
-    #time_val.append( time.time() - #start )
 
-    #start = time.time()
     # Conert A hat to real space
     A = np.fft.ifft( A_hat )*ifft_fact
-    #time_val.append( time.time() - #start )
 
-    #start = time.time()
     # Linear intepolation to fined A(z,z_1_j) values
     A_z_1_j = np.interp( y[2*N_z_1:2*N_z_1+N], z_1, A )
-    #time_val.append( time.time() - #start )
 
-    #B = 1/(2*rho)
-    #omega_prime = omega+B
+    # Chicanes portion calculated here
+    heavy_sum = np.sum( [ np.heaviside( z - i*l_bar, 0.5 ) for i in range( num_segmets ) ] )
+    chicane_factor = np.exp( -1j*omega*delta_bar*heavy_sum )
 
-    #start = time.time()
+    # Solves each differential equasion
     dAdz = np.sum( np.exp( -1j*np.outer(y[2*N_z_1:2*N_z_1+N], omega_prime )), axis=0)/n_bar - 1j*omega*A_hat
-    #time_val.append( time.time() - #start )
-    #start = time.time()
+    dAdz *= heavy_sum.conj()
     dzdz = 2*rho*y[2*N_z_1 + N:2*(N_z_1 + N)] 
-    #time_val.append( time.time() - #start )
-    #start = time.time()
     dpdz = -2*(A_z_1_j*np.exp( 1j*y[2*N_z_1:2*N_z_1+N]*_1_2_rho )).real
-    #time_val.append( time.time() - #start )
 
     #dzdz = [ 0 for i in range(N) ]
     #dpdz = [ 0 for i in range(N) ]
 
-    #start = time.time()
-    out = np.concatenate(( dAdz.real, dAdz.imag, dzdz, dpdz ))
-    #time_val.append( time.time() - #start )
-
-    #print( #time_val )
-    #exit()
-
-    return out
-        
+    return np.concatenate(( dAdz.real, dAdz.imag, dzdz, dpdz ))
