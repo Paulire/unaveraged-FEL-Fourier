@@ -155,12 +155,12 @@ def run( self ):
             # Stores the data from the last run in relevent output data sets
             if type( self.A_out_ft ) == type( None ):
                 self.A_out_ft = out.y[:self.N_z1,:] + out.y[self.N_z1:self.N_z1*2,:]*1j
-                self.z_1_j_out = out.y[self.N_z1*2:self.N_z1*2+self.N]
-                self.p_j_out = out.y[ self.N_z1*2+self.N: ]
+                self.z_1_j_out = out.y[self.N_z1*2:self.N_z1*2+self.N,:]
+                self.p_j_out = out.y[ self.N_z1*2+self.N:,:]
             else:
                 self.A_out_ft = np.hstack( [ self.A_out_ft, out.y[:self.N_z1,1:] + out.y[self.N_z1:self.N_z1*2,1:]*1j ] )
-                self.z_1_j_out =  np.hstack( [ self.z_1_j_out, out.y[self.N_z1*2:self.N_z1*2+self.N] ] )
-                self.p_j_out = np.hstack( [ self.p_j_out, out.y[ self.N_z1*2+self.N: ] ] )
+                self.z_1_j_out =  np.hstack( [ self.z_1_j_out, out.y[self.N_z1*2:self.N_z1*2+self.N,1:] ] )
+                self.p_j_out = np.hstack( [ self.p_j_out, out.y[ self.N_z1*2+self.N:,1: ] ] )
 
             self.current_save_index = indexes[i+1]
 
