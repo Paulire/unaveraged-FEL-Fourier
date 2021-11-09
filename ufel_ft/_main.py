@@ -148,7 +148,7 @@ def run( self ):
                             input_data, method='LSODA',
                             #t_eval=self.z,
                             t_eval=self.z[ indexes[i]:indexes[i+1] + 1 ] if i != len( indexes ) - 2 else self.z[ indexes[i]: ],
-                            args=(self.N, self.N_z1,self.omega, self.chi, self.rho, self.n_bar, self.z_1, omega_prime, _1_2_rho, 1/(self.z_1[1] - self.z_1[0]) ),
+                            args=(self.N, self.N_z1,self.omega, self.chi, self.rho, self.n_bar, self.z_1, omega_prime, _1_2_rho, 1/(self.z_1[1] - self.z_1[0]), self.l_bar, self.delta_bar, self.num_segmets ),
                             atol=1e-5 )
                             #rtol=1e-2 )
 

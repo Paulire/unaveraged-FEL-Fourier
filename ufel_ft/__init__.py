@@ -11,8 +11,8 @@ import _fel_io
 
 class FEL_FT:
     # Set's up the user inputs into a usable manner
-    def __init__( self, dz=None, dz_1=None, N=None, l_e=None, n_bar=None, rho=None, chi=None, fname=None, continue_from_file=False, z_end_file = None ):
-        _setup.__init__( self, dz, dz_1, N, l_e, n_bar, rho, chi, fname, continue_from_file, z_end_file )
+    def __init__( self, dz=None, dz_1=None, N=None, l_e=None, n_bar=None, rho=None, chi=None, l_bar=None, delta_bar=0, fname=None, continue_from_file=False, z_end_file = None ):
+        _setup.__init__( self, dz, dz_1, N, l_e, n_bar, rho, chi, l_bar, delta_bar, fname, continue_from_file, z_end_file )
     
     # Currently used to set the values of A and chi, should be moved to __init__
     def set_initial_condition( self ):

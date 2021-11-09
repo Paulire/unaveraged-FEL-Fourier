@@ -11,7 +11,7 @@ import numpy as np
 from _fel_io import _load
 from sys import exit
 
-def __init__( self, dz=None, dz_1=None, N=None, l_e=None, n_bar=None, rho=None, chi=None, fname=None, continue_from_file=False, z_end_file = None ):
+def __init__( self, dz=None, dz_1=None, N=None, l_e=None, n_bar=None, rho=None, chi=None, l_bar=None, delta_bar=0, fname=None, continue_from_file=False, z_end_file = None ):
     # Load data from a file if specified, else set data from inputs
     if fname != None:
         _load( self, fname )
@@ -64,15 +64,6 @@ def __init__( self, dz=None, dz_1=None, N=None, l_e=None, n_bar=None, rho=None, 
         
     # The particles are placed between z_1[0] and l_e evenly then offset by a random number
     self.z_1_j = np.linspace( self.z_1[0], l_e, N, endpoint=True )
-    #self.z_1_j += 0.5*( self.z_1_j[1] - self.z_1_j[0] )
-    #self.z_1_j = np.array( [ self.z_1_j[i] + (np.random.random()*2 -1)*0.0000001 for i in range( N )] )
-
-    # Baisc shotnoise model https://doi.org/10.1016/0030-4018(92)90333-M
-    """n = float( self.N/1e-8 )
-    sigma = np.sqrt( 3*n/N )
-    self.z_1_j = np.array( 
-                    [ (j/n)*2*np.pi + 2*np.random.random()*sigma for j in range( self.N ) ]
-            )%l_e"""
 
     # Number of electrons per unit z_1
     if type( n_bar ) != float:
@@ -91,7 +82,28 @@ def __init__( self, dz=None, dz_1=None, N=None, l_e=None, n_bar=None, rho=None, 
             raise TypeError( "'rho' must be a float")
     else:
         self.rho = rho
+
+    # Sets the undulator modual length
+    if type( l_bar ) != float:
+        try:
+            self.l_bar = float( l_bar )
+        except:
+            raise TypeError( "'l_bar' must be a float" )
+    else:
+        self.l_bar = l_bar
     
+    # Sets the chicane length
+    if type( delta_bar ) != float:
+        try:
+            self.delta_bar = float( delta_bar )
+        except:
+            raise TypeError( "'delta_bar' must be a float" )
+    else:
+        self.delta_bar = delta_bar
+
+    # Number of undulor modulas
+    self.num_segmets = int( self.z[-1]/( self.l_bar + self.delta_bar  ) ) 
+
     # Chi is the charge weighting paramiter, needs improvement
     if chi == None:
         self.chi = np.zeros( N ) + 1
