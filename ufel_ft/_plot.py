@@ -21,7 +21,6 @@ def _plot_z1_A( self, z, fname, dpi ):
 
     fig, axs = plt.subplots(  )
     axs.plot( self.z_1, np.abs(self.A_out[:,index])**2, '-k')
-    #axs.plot( self.z_1_j_out[:,index], np.zeros( len( self.z_1_j_out[:,index] ) ), 'xr' )
     axs.set_xlabel('$\\bar{z}_{1}$', fontsize=20)
     axs.set_ylabel('$|A|^2$', fontsize=20)
     axs.set_title('$\\bar{z}=' + str( round( self.z[index],2 ) ) + str('$'))
@@ -55,6 +54,34 @@ def _plot_E_z( self, fname, dpi ):
     axs.set_ylabel('$E$', fontsize=20)
     axs.set_ylim( 0, 1.01*np.max( self.E_z ) )
     axs.set_xlim( self.z[0], self.z[-1] )
+
+    axs.tick_params( direction='in', axis='both', length=6, right=True, top=True, which="both", labelsize=18 )
+    axs.minorticks_on()
+    axs.tick_params( which='minor', length=3, direction='in'  )
+
+    plt.tight_layout()
+
+    if fname != None:
+        plt.savefig(fname, 
+                    dpi=dpi)
+    else:
+        plt.show()
+
+    plt.close( fig )
+
+def _plot_power_z( self, fname, dpi ):
+    matplotlib.rcParams['font.family'] = 'serif'
+    matplotlib.rcParams['mathtext.fontset'] = 'dejavuserif'
+    matplotlib.rcParams['text.usetex'] = 'True'
+    matplotlib.rcParams['text.latex.preamble'] = '\\usepackage{amsmath} \\usepackage{amssymb}'
+    matplotlib.rcParams['axes.linewidth'] = '1.2'
+
+    fig, axs = plt.subplots( )
+    axs.plot( self.z,self.spectral_power_z, '-k' )
+    axs.set_ylim( 0, max( self.spectral_power_z ) )
+    axs.set_xlim( self.z[0], self.z[-1] )
+    axs.set_xlabel('$\\bar{z}$', fontsize=20)
+    axs.set_ylabel('$P$', fontsize=20)
 
     axs.tick_params( direction='in', axis='both', length=6, right=True, top=True, which="both", labelsize=18 )
     axs.minorticks_on()

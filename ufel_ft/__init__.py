@@ -35,6 +35,9 @@ class FEL_FT:
     def plot_pj_z1( self, z, fname=None, dpi=300 ):
         _plot._plot_pj_z1( self, z, fname, dpi )
 
+    def plot_power_z( self, fname=None, dpi=300 ):
+        _plot._plot_power_z( self, fname, dpi )
+
     # Save the data as a json file
     def save( self, fname=None ):
         _fel_io._save( self, fname )
