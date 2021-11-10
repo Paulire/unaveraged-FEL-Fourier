@@ -47,6 +47,10 @@ def _load( self, fname ):
     self.z_1_j_out = np_array( eval( input_data['z_1_j_out'] ) )
     self.p_j_out = np_array( eval( input_data['p_j_out'] ) )
     self.omega = np_array( eval( input_data['omega'] ) )
+    try:
+        self.spectral_power_z = np_array( eval( input_data['spectral_power_z'] ) )
+    except:
+        pass
 
     del( input_data )
 
@@ -82,6 +86,7 @@ def _save( self, fname=None ):
                     'z_1': str( self.z_1.tolist() ),
                     'z': str( self.z[:self.current_save_index+1].tolist() ),
                     'z_1_j': str( self.z_1_j.tolist() ),
+                    'spectral_power_z': str( self.spectral_power_z.tolist() ),
                     'omega': str( self.omega.tolist() ) }
 
     # Puts the data into a json file
