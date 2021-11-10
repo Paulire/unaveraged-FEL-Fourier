@@ -27,11 +27,11 @@ def _plot_z1_A( self, z, fname, dpi ):
     axs.set_ylim( 0,np.max( 1.05*np.abs(self.A_out)**2 ) )
     axs.set_xlim( self.z_1[0], self.z_1[-1] )
 
-    plt.tight_layout()
-
     axs.tick_params( direction='in', axis='both', length=6, right=True, top=True, which="both", labelsize=18 )
     axs.minorticks_on()
     axs.tick_params( which='minor', length=3, direction='in'  )
+
+    plt.tight_layout()
 
     if fname != None:
         plt.savefig(fname, 
