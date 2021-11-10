@@ -14,7 +14,7 @@ from tqdm import tqdm
 from sys import exit
 
 import diff_eq
-from _analysis import _calc_E
+import _analysis
 
 # This loads the OdeSolver step and init fucntion and saves the ones to be monkey edited as backups 
 from scipy.integrate._ivp.rk import OdeSolver
@@ -180,6 +180,7 @@ def run( self ):
         self.A_out[:,i] = np.fft.ifft( self.A_out_ft[:,i] )/(self.z_1[1] - self.z_1[0])
 
     # Calculate the E field as a function of z
-    self.E_z = _calc_E( self )
+    self.E_z = _analysis._calc_E( self )
+    self.spectral_power_z = _analysis._calc_spectral_power( self )
 
     return 0 
