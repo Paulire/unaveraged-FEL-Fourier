@@ -48,9 +48,6 @@ def _load( self, fname ):
     self.p_j_out = np_array( eval( input_data['p_j_out'] ) )
     self.omega = np_array( eval( input_data['omega'] ) )
     self.spectral_power_z = np_array( eval( input_data['spectral_power_z'] ) )
-    self.l_bar = input_data['l_bar']
-    self.delta_bar = input_data['delta_bar']
-    self.num_segmets = input_data['num_segmets']
 
     del( input_data )
 
@@ -87,9 +84,6 @@ def _save( self, fname=None ):
                     'z': str( self.z[:self.current_save_index+1].tolist() ),
                     'z_1_j': str( self.z_1_j.tolist() ),
                     'spectral_power_z': str( self.spectral_power_z.tolist() ),
-                    'l_bar': self.l_bar,
-                    'delta_bar': self.delta_bar,
-                    'num_segmets': self.num_segmets,
                     'omega': str( self.omega.tolist() ) }
 
     # Puts the data into a json file

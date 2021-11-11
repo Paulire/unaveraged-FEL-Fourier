@@ -11,7 +11,7 @@ import numpy as np
 from _fel_io import _load
 from sys import exit
 
-def __init__( self, dz=None, dz_1=None, N=None, l_e=None, n_bar=None, rho=None, chi=None, l_bar=None, delta_bar=0, fname=None, continue_from_file=False, z_end_file = None ):
+def __init__( self, dz=None, dz_1=None, N=None, l_e=None, n_bar=None, rho=None, chi=None, fname=None, continue_from_file=False, z_end_file = None ):
     # Load data from a file if specified, else set data from inputs
     if fname != None:
         _load( self, fname )
@@ -82,27 +82,6 @@ def __init__( self, dz=None, dz_1=None, N=None, l_e=None, n_bar=None, rho=None, 
             raise TypeError( "'rho' must be a float")
     else:
         self.rho = rho
-
-    # Sets the undulator modual length
-    if type( l_bar ) != float:
-        try:
-            self.l_bar = float( l_bar )
-        except:
-            raise TypeError( "'l_bar' must be a float" )
-    else:
-        self.l_bar = l_bar
-    
-    # Sets the chicane length
-    if type( delta_bar ) != float:
-        try:
-            self.delta_bar = float( delta_bar )
-        except:
-            raise TypeError( "'delta_bar' must be a float" )
-    else:
-        self.delta_bar = delta_bar
-
-    # Number of undulor modulas
-    self.num_segmets = int( self.z[-1]/( self.l_bar + self.delta_bar  ) ) 
 
     # Chi is the charge weighting paramiter, needs improvement
     if chi == None:
