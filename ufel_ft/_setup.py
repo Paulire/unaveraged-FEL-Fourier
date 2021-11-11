@@ -11,7 +11,7 @@ import numpy as np
 from _fel_io import _load
 from sys import exit
 
-def __init__( self, dz=None, dz_1=None, N=None, l_e=None, n_bar=None, rho=None, chi=None, fname=None, continue_from_file=False, z_end_file = None ):
+def __init__( self, dz, dz_1, N, l_e, n_bar, rho, chi, l_bar, s_bar, fname, continue_from_file=False, z_end_file = None ):
     # Load data from a file if specified, else set data from inputs
     if fname != None:
         _load( self, fname )
@@ -82,6 +82,45 @@ def __init__( self, dz=None, dz_1=None, N=None, l_e=None, n_bar=None, rho=None, 
             raise TypeError( "'rho' must be a float")
     else:
         self.rho = rho
+
+    # If Chicanes are being modelled (l_bar!=0) then this sets up the points in z where the model applies the s_bar shift
+    # 
+    if l_bar != 0:
+        # Ensures the undulator modual length is float
+        if type( l_bar ) != float:
+            try:
+                self.l_bar = float( l_bar )
+            except:
+                raise TypeError( "'l_bar' must be a float" )
+        
+        # Chicane slippage must be a float
+        if type( s_bar ) != float:
+            try:
+                self.s_bar = float( s_bar )
+            except:
+                raise TypeError ("'s_bar' must be a float")
+
+        # Can't have negitive slipage
+        if s_bar < 0:
+            raise ValueError("'s_bar' must be zero or positive")
+        if l_bar < 0:
+            raise ValueError("'l_bar' must be zero or positive")
+
+        # Sets the z values for where the modual must end and slippage must be added
+        undulator_end_z_points = np.arange( 0, self.z[-1], l_bar )
+        undulator_end_z_points = np.delete( undulator_end_z_points, 0 )
+
+        # Adds the data points for the undulator moduals
+        self.z = np.concatenate( (self.z,undulator_end_z_points) )
+        self.z.sort()
+        self.z = np.unique( self.z )
+
+        # Determines the index values of the end of the moduals
+        # This is where the chicane slipage occors
+        self.module_end_indexes = [ np.where( self.z == undulator_end_z_points[i] )[0][0] for i in range( undulator_end_z_points.shape[0] ) ]
+
+        print( self.module_end_indexes )
+        [ print( self.z[self.module_end_indexes[i]] ) for i in range( len( self.module_end_indexes ) ) ]
 
     # Chi is the charge weighting paramiter, needs improvement
     if chi == None:
