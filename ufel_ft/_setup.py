@@ -84,7 +84,6 @@ def __init__( self, dz, dz_1, N, l_e, n_bar, rho, chi, l_bar, s_bar, fname, cont
         self.rho = rho
 
     # If Chicanes are being modelled (l_bar!=0) then this sets up the points in z where the model applies the s_bar shift
-    # 
     if l_bar != 0:
         # Ensures the undulator modual length is float
         if type( l_bar ) != float:
@@ -118,9 +117,6 @@ def __init__( self, dz, dz_1, N, l_e, n_bar, rho, chi, l_bar, s_bar, fname, cont
         # Determines the index values of the end of the moduals
         # This is where the chicane slipage occors
         self.module_end_indexes = [ np.where( self.z == undulator_end_z_points[i] )[0][0] for i in range( undulator_end_z_points.shape[0] ) ]
-
-        print( self.module_end_indexes )
-        [ print( self.z[self.module_end_indexes[i]] ) for i in range( len( self.module_end_indexes ) ) ]
 
     # Chi is the charge weighting paramiter, needs improvement
     if chi == None:

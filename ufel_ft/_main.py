@@ -111,13 +111,19 @@ def run( self ):
         self.omega = 2*np.pi*np.fft.fftfreq( self.N_z1, (self.z_1[1] - self.z_1[0] ))
         self.A_hat = np.fft.fft( self.A )*(self.z_1[1] - self.z_1[0])
 
-        # This will split the runs into sizes of \delta z=1 and run each individually
-        # This will allow early termination of the model and will still save the data
-        first_index = int( 1//( self.z[1]-self.z[0] ) )
-        indexes = [ i*first_index for i in range( self.z.shape[0]//first_index + 1 ) ]
-        if indexes[-1] != self.z.shape[0] - 1: 
-            indexes.append( self.z.shape[0] - 1 )
+        # Splits the z points into chunks with whole number boundries (or the nearest z point)
+        chunk_points = np.arange( 0, self.z[-1], 1 )
+        indexes = [ np.abs( self.z - chunk_points[i] ).argmin() for i in range( chunk_points.shape[0] ) ]
+        indexes.append( self.z.shape[0] -1 )
 
+        # Adds the chicanes to the indexes if they have been defined
+        try:
+            indexes.extend( self.module_end_indexes )
+            indexes = np.unique( indexes ).tolist()
+            chicanes_use = True
+        except AttributeError:
+            chicanes_use = False
+            pass
 
     # solve_ivp does not accept complex number by default
     A_hat_prime = np.concatenate( ( self.A_hat.real, self.A_hat.imag ) )
@@ -136,10 +142,15 @@ def run( self ):
     for i in range( len( indexes ) - 1 ):
         # If ctrl+c pressed, then the model will terminate and the data upto the latest run chunk will save
         try:
-            print( "Running z segment " + str( round( self.z[indexes[i]], 2 ) ) + ' --> ' + str( round( self.z[indexes[i+1]], 2 ) ) + ' for upto z=' + str( round( self.z[-1] ) ) )
+            print( "Running z segment " + str( round( self.z[indexes[i]], 2 ) ) + ' --> ' + str( round( self.z[indexes[i+1]], 2 ) ) + ' for upto z=' + str( round( self.z[-1], 2 ) ) )
             
             # Use last run data to get this runs IC
             input_data = out.y[:,-1] if i != 0 else input_data
+
+            # If the chicanes have been defined, then then the electrons will be shifted back by s_bar distance in z_1
+            if chicanes_use == True and indexes[i] in self.module_end_indexes:
+                print( 'CHICANEAJDFLK' )
+                input_data[ self.N_z1*2:self.N_z1*2+self.N ] -= self.s_bar
 
             # Run the model
             out = solve_ivp(diff_eq.fel_eq,
