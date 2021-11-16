@@ -13,8 +13,8 @@ from matplotlib import pyplot as plt
 from tqdm import tqdm
 from sys import exit
 
-import diff_eq
-import _analysis
+import ufel_ft.diff_eq as diff_eq
+import ufel_ft._analysis as _analysis
 
 # This loads the OdeSolver step and init fucntion and saves the ones to be monkey edited as backups 
 from scipy.integrate._ivp.rk import OdeSolver

@@ -4,6 +4,15 @@ This python modual solves the unavrage 1D free electron laser (FEL) equasions [1
 
 ## Installing
 A _pip_ and/or _deb_ file will be provided in the future.
+### Pip
+```
+cd Downloads/
+git clone https://github.com/Paulire/unaveraged-FEL-Fourier
+cd unaveraged-FEL-Fourier
+pip3 install .
+```
+
+To uninstall: ```pip3 uninstall ufel_ft```
 
 ## Usage
 

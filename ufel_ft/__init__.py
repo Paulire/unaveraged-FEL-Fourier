@@ -4,10 +4,10 @@ Created on Mon Sep 27 09:29:17 2021
 
 @author: paul
 """
-import _setup
-import _main
-import _plot
-import _fel_io
+import ufel_ft._setup  as _setup
+import ufel_ft._main   as _main
+import ufel_ft._plot   as _plot
+import ufel_ft._fel_io as _fel_io
 
 import numpy as np
 

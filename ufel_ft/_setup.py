@@ -8,7 +8,7 @@ Contains file for setting up the integration enviroment
 @author: paul.ireland.2017@uni.strath.ac.uk
 """
 import numpy as np
-from _fel_io import _load
+from ufel_ft._fel_io import _load
 from sys import exit
 
 def __init__( self, dz, dz_1, N, l_e, n_bar, rho, chi, l_bar, s_bar, fname, continue_from_file=False, z_end_file = None ):
@@ -91,6 +91,8 @@ def __init__( self, dz, dz_1, N, l_e, n_bar, rho, chi, l_bar, s_bar, fname, cont
                 self.l_bar = float( l_bar )
             except:
                 raise TypeError( "'l_bar' must be a float" )
+        else:
+            self.l_bar = l_bar
         
         # Chicane slippage must be a float
         if type( s_bar ) != float:
@@ -98,6 +100,8 @@ def __init__( self, dz, dz_1, N, l_e, n_bar, rho, chi, l_bar, s_bar, fname, cont
                 self.s_bar = float( s_bar )
             except:
                 raise TypeError ("'s_bar' must be a float")
+        else:
+            self.s_bar = s_bar
 
         # Can't have negitive slipage
         if s_bar < 0:

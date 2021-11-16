@@ -19,7 +19,7 @@ setup(
       author='Paul Ireland',
       author_email='paul.ireland.2017@uni.strath.ac.uk',
       license='N/A',
-      #packages=['ufel_ft'],
+      packages=['ufel_ft'],
       install_requires=['scipy',
                         'numpy',                     
                         'matplotlib',
