@@ -37,7 +37,7 @@ Plots |A|^2 as a function of z_1 for a given z position
 
 ## Example
 ```
-import ufel_ft
+import ufel_ft as ufel
 
 fel = ufel.FEL_FT( dz=(0,1,150),
                    dz_1=(0,3,800),
