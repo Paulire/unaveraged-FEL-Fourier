@@ -19,6 +19,8 @@ The init function for the FEL model
  * ```fname``` - string - Load a previuse file
  * ```continue_from_file``` - bool - contine from the end of the ```fname``` position if ```True```
  * ```z_end_file``` - tupple - Limits and number of z points (start, end, N) if ```continue_from_file``` is ```True```
+ * ```l_bar``` - float - Undulator modual lengh
+ * ```s_bar``` - flaot - Chicane slipage length
 
 ```def run()```
 Will solve the FEL equasions based off ```FEL_FT``` inputs. The model is solved in chunks of z, if ctrl+c is pressed during run, then the modual will store data up the model upto the last complete chunk.
