@@ -28,6 +28,10 @@ def _plot_z1_A( self, z, fname, dpi ):
     axs.set_xlim( self.z_1[0], self.z_1[-1] )
 
     axs.tick_params( direction='in', axis='both', length=6, right=True, top=True, which="both", labelsize=18 )
+    axs.ticklabel_format(axis='y', style='sci',scilimits=(-2,2))
+    axs.tick_params(axis='x', pad=6)
+    axs.tick_params(axis='y', pad=6)
+    axs.yaxis.offsetText.set_fontsize(18)
     axs.minorticks_on()
     axs.tick_params( which='minor', length=3, direction='in'  )
 
