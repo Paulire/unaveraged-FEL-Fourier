@@ -11,7 +11,7 @@ import numpy as np
 from ufel_ft._fel_io import _load
 from sys import exit
 
-def __init__( self, dz, dz_1, N, l_e, n_bar, rho, chi, l_bar, s_bar, fname, continue_from_file=False, z_end_file = None ):
+def __init__( self, dz, dz_1, N, l_e, beam_off_z1, n_bar, rho, chi, l_bar, s_bar, fname, continue_from_file=False, z_end_file = None ):
     # Load data from a file if specified, else set data from inputs
     if fname != None:
         _load( self, fname )
@@ -61,9 +61,17 @@ def __init__( self, dz, dz_1, N, l_e, n_bar, rho, chi, l_bar, s_bar, fname, cont
         raise ValueError("'l_e' must lie in the value bounds of z_1")
     else:
         self.l_e = l_e
+
+    """# The beam offset in z_1, Electrons are place between beam_off_z1 and l_e + beam_off_z1
+    try:
+        self.beam_off_z1 = float( beam_off_z1 )
+    except: 
+        raise TypeError( "'beam_off_z1' must be a float" )
+    if self.beam_off_z1 < 0:
+        raise ValueError( "'beam_off_z1' must be greater than or equle to zero" )"""
         
     # The particles are placed between z_1[0] and l_e evenly then offset by a random number
-    self.z_1_j = np.linspace( self.z_1[0], l_e, N, endpoint=True )
+    self.z_1_j = np.linspace( self.z_1[0], l_e, N, endpoint=True ) #+ self.beam_off_z1
 
     # Number of electrons per unit z_1
     if type( n_bar ) != float:

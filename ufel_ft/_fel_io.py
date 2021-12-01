@@ -33,6 +33,7 @@ def _load( self, fname ):
     self.current_save_index = input_data['current_save_index']
     self.N = input_data['N']
     self.l_e = input_data['l_e']
+    self.beam_off_z1 = input_data['beam_off_z1']
     self.n_bar = input_data['n_bar']
     self.rho = input_data['rho']
     self.A = np_array( eval( input_data['A'] ) )
@@ -69,7 +70,8 @@ def _save( self, fname=None ):
                     'N_z1': self.N_z1,
                     'current_save_index': self.current_save_index,
                     'N': self.N,
-                    'l_e': self.l_e,
+                    #'l_e': self.l_e,
+                    #'beam_off_z1': self.beam_off_z1,
                     'n_bar': self.n_bar,
                     'rho': self.rho,
                     'A': str( self.A.tolist() ),

@@ -13,7 +13,7 @@ import numpy as np
 
 class FEL_FT:
     # Set's up the user inputs into a usable manner
-    def __init__( self, dz=None, dz_1=None, N=None, l_e=None, n_bar=None, rho=None, chi=None, l_bar=0, s_bar=0, fname=None, continue_from_file=False, z_end_file = None ):
+    def __init__( self, dz=None, dz_1=None, N=None, l_e=None, beam_off_z1=0.0, n_bar=None, rho=None, chi=None, l_bar=0, s_bar=0, fname=None, continue_from_file=False, z_end_file = None ):
         # Declarer each verlible so that the user may see the when pressing tab in a code editor
         self.z = np.array( [0.0] )
         self.continue_from_file = bool( None )
@@ -31,9 +31,10 @@ class FEL_FT:
         self.p_j = np.zeros( 1 )
         self.l_bar = float(0)
         self.s_bar = float(0)
+        self.beam_off_z1 = float(0.0)
 
         # Settup the verlibles
-        _setup.__init__( self, dz, dz_1, N, l_e, n_bar, rho, chi, l_bar, s_bar, fname, continue_from_file, z_end_file )
+        _setup.__init__( self, dz, dz_1, N, l_e, beam_off_z1, n_bar, rho, chi, l_bar, s_bar, fname, continue_from_file, z_end_file )
     
     # Currently used to set the values of A and chi, should be moved to __init__
     def set_initial_condition( self ):
