@@ -68,7 +68,7 @@ def _save( self, fname=None ):
     # Converts all the relevent data to a dictionary
     output_data = { 'N_z': self.N_z,
                     'N_z1': self.N_z1,
-                    'current_save_index': self.current_save_index,
+                    'current_save_index': int( self.current_save_index ),
                     'N': self.N,
                     'l_e': self.l_e,
                     'beam_off_z1': self.beam_off_z1,
