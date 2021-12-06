@@ -133,8 +133,16 @@ def __init__( self, dz, dz_1, N, l_e, beam_off_z1, n_bar, rho, chi, l_bar, s_bar
     # Chi is the charge weighting paramiter, needs improvement
     if chi == None:
         self.chi = np.zeros( N ) + 1
+    else:
+        if callable( chi ) != True:
+            return TypeError("'chi' must be a funtion")
 
-def set_initial_condition( self ):
-    # Currently just sets it automatically
+        self.chi = np.array( [ chi( self.z_1_j[i] ) for i in range( self.N ) ] )
+
+    # Sets the inital energy and field values 
     self.A = np.zeros( self.N_z1 ) #+ 1e-8            # Field amplitude
     self.p_j = np.zeros( self.N )
+
+def set_initial_condition( self ):
+    print('\033[1;31mWarning\033[0;0m: set_initial_condition is a redundant function and does not need to be called anymore')
+
