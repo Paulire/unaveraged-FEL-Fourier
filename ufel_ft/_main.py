@@ -74,13 +74,23 @@ def run( self ):
             indexes = np.concatenate( ( indexes, new_indexes ) )
             indexes = indexes.tolist()
 
+        if self.l_bar != 0:
+            chicane_position = np.arange( self.z[0], self.z[-1], self.l_bar )
+            chicane_position = np.delete( chicane_position, np.where( chicane_position - self.z[ self.continue_from_file_z_value ] < 0 )[ 0 ] )
+            self.z = np.unique( np.concatenate( ( self.z, chicane_position ) ) )
+            self.module_end_indexes = [ np.where( self.z == chicane_position[i] )[0][0] for i in range( chicane_position.shape[0] ) ]
+            indexes = np.concatenate( ( indexes, self.module_end_indexes ) ).tolist()
+            chicanes_use = True
+        else:
+            chicanes_use = False
+
+
         # If the final z value is not a whole number, then the final index
         # point for z is added to the list of indexes
         if indexes[-1] != self.z.shape[0] - 1: 
             indexes.append( self.z.shape[0] - 1 )
 
         indexes = np.array( np.unique( indexes ), dtype=int ).tolist()
-
 
         A = False
         if A == True:
