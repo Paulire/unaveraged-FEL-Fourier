@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 import numpy as np
 import matplotlib
 from matplotlib import pyplot as plt
@@ -60,6 +61,9 @@ def _plot_E_z( self, fname, dpi ):
     axs.set_xlim( self.z[0], self.z[-1] )
 
     axs.tick_params( direction='in', axis='both', length=6, right=True, top=True, which="both", labelsize=18 )
+    axs.tick_params(axis='x', pad=6)
+    axs.tick_params(axis='y', pad=6)
+    axs.yaxis.offsetText.set_fontsize(18)
     axs.minorticks_on()
     axs.tick_params( which='minor', length=3, direction='in'  )
 
